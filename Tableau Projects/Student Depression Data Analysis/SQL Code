@@ -1,0 +1,84 @@
+--SQL
+
+--The code  shared involves multiple steps for cleaning, transforming, and preparing the data within a SQL Server database
+
+--Modifying Gender Column 
+update dbo.DepressionStudentDataset
+set Gender = 'M' where Gender = 'male'
+
+update dbo.DepressionStudentDataset
+set Gender = 'F' where Gender = 'Female'
+
+--adding the Age Group Column 
+alter table dbo.DepressionStudentDataset
+add Age_Group varchar(max)
+
+update dbo.DepressionStudentDataset
+set Age_Group =
+case when Age between 18 and 24 then 'A1'
+else case when Age between 25 and 30 then 'A2'
+else 'A3' end end
+
+select Age_Group, count(*) from dbo.DepressionStudentDataset
+group by Age_Group
+
+
+--cleaning
+select* from INFORMATION_SCHEMA.columns where table_name
+like 'DepressionStudentDataset'
+
+--Column Ditribution remaining colums
+select Academic_Pressure, count(*) from [dbo].[DepressionStudentDataset]
+group by Academic_Pressure
+
+select Study_Satisfaction, count(*) from [dbo].[DepressionStudentDataset]
+group by Study_Satisfaction
+
+select Sleep_Duration, count(*) from [dbo].[DepressionStudentDataset]
+group by Sleep_Duration
+
+select Dietary_Habits, count(*) from [dbo].[DepressionStudentDataset]
+group by Dietary_Habits
+
+select Have_you_ever_had_suicidal_thoughts, count(*) from [dbo].[DepressionStudentDataset]
+group by Have_you_ever_had_suicidal_thoughts
+
+select Dietary_Habits, count(*) from [dbo].[DepressionStudentDataset]
+group by Dietary_Habits
+
+
+select Study_Hours, count(*) from [dbo].[DepressionStudentDataset]
+group by Study_Hours
+
+select Financial_Stress, count(*) from [dbo].[DepressionStudentDataset]
+group by Financial_Stress
+
+select Family_History_of_Mental_Illness, count(*) from [dbo].[DepressionStudentDataset]
+group by Family_History_of_Mental_Illness
+
+select Depression, count(*) from [dbo].[DepressionStudentDataset]
+group by Depression
+
+--Adding Index Column & Updating depression
+alter table [dbo].[DepressionStudentDataset]
+add Index_Column int identity(1,1)
+
+select * from [dbo].[DepressionStudentDataset]
+
+--Modifying Depression column 
+select* from INFORMATION_SCHEMA.columns where table_name
+like 'DepressionStudentDataset'
+
+AlTER TABLE [DepressionStudentDataset]
+AlTER COLUMN Depression VARCHAR(MAX)
+
+update [DepressionStudentDataset]
+set Depression = 'No' where Depression = '0'
+
+update [DepressionStudentDataset]
+set Depression = 'Yes' where Depression = '1'
+
+select Depression from [DepressionStudentDataset]
+
+--After the data was cleaned in SQL, it was likely imported into Tableau to create visualizations. 
+--Tableau would allow for further analysis and insights into the cleaned dataset
